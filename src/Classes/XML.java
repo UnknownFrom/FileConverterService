@@ -2,6 +2,7 @@ package Classes;
 
 import Interface.IReader;
 import Interface.IUniversity;
+import Interface.IWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -16,11 +17,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class XML implements IReader {
+public class XML implements IReader, IWriter {
 
     @Override
     public void read(List<IUniversity> universityList, String pathDocument) throws ParserConfigurationException, IOException, SAXException {
         ToReadUniversitiesFromXML(universityList, pathDocument);
+    }
+
+    @Override
+    public void write(List<IUniversity> universityList, String pathDocument) {
+        //ToWriteUniversitiesToXML(universityList, pathDocument);
     }
 
     private void ToReadUniversitiesFromXML(List<IUniversity> universityList, String path) throws ParserConfigurationException, IOException, SAXException {
@@ -39,21 +45,35 @@ public class XML implements IReader {
             universityList.add(new University(nameUni));
 
             NodeList facultiesElements = university.getChildNodes();
+            int countStud = -1;
+            int countFac = -1;
             for (int k = 0; k < facultiesElements.getLength(); k++) {
                 Node faculty = facultiesElements.item(k);
-                NamedNodeMap attributesFac = faculty.getAttributes();
-                String nameFac = attributesFac.getNamedItem("name").getNodeValue();
-                universityList.get(i).AddFaculty(new Faculty(nameFac));
 
-                NodeList studentsElements = faculty.getChildNodes();
-                for (int m = 0; m < studentsElements.getLength(); m++) {
-                    Node student = studentsElements.item(k);
-                    NamedNodeMap attributesStud = student.getAttributes();
-                    String nameStud = attributesStud.getNamedItem("name").getNodeValue();
-                    universityList.get(i).getFaculty(k).AddStudent(new Student(nameStud));
-                    universityList.get(i).AddStudent(new Student(nameStud));
+                if (faculty.getNodeType() != Node.TEXT_NODE) {
+
+                    NamedNodeMap attributesFac = faculty.getAttributes();
+                    String nameFac = attributesFac.getNamedItem("name").getNodeValue();
+                    universityList.get(i).AddFaculty(new Faculty(nameFac));
+                    countFac++;
+
+                    NodeList studentsElements = faculty.getChildNodes();
+
+                    for (int m = 0; m < studentsElements.getLength(); m++) {
+                        Node student = studentsElements.item(m);
+                        if (student.getNodeType() != Node.TEXT_NODE) {
+                            NamedNodeMap attributesStud = student.getAttributes();
+                            String nameStud = attributesStud.getNamedItem("name").getNodeValue();
+                            universityList.get(i).getFaculty(countFac).AddStudent(new Student(nameStud));
+                            universityList.get(i).AddStudent(new Student(nameStud));
+                            countStud++;
+                            universityList.get(i).getStudent(countStud).AddFaculties(nameFac);
+                        }
+                    }
                 }
             }
         }
     }
+
+
 }

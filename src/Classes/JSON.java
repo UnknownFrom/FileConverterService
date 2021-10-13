@@ -1,69 +1,82 @@
 package Classes;
 
-import Interface.IReader;
-import Interface.IStudent;
-import Interface.IUniversity;
+import Interface.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-public class JSON implements IReader {
+public class JSON implements IReader, IWriter {
 
 
     @Override
     public void read(List<IUniversity> university, String pathDocument) throws IOException, ParseException {
         //ToReadUniversitiesFromJSON(university, pathDocument);
-        //ToReadFacultiesFromJSON(university, pathDocument);
-        //ToReadStudentsFromJSON(university, pathStudent);
-        ToSaveUniversitiesToJSON(university, pathDocument);
     }
 
-    private void ToSaveUniversitiesToJSON(List<IUniversity> university, String pathDocument) {
-        JSONObject students = new JSONObject();
-        for (int i = 0; i < university.size(); i++)
+    @Override
+    public void write(List<IUniversity> universityList, String pathDocument) {
+        ToWriteUniversitiesToJSON(universityList, pathDocument);
+    }
+
+    private void ToWriteUniversitiesToJSON(List<IUniversity> universityList, String pathDocument) {
+        JSONObject result = new JSONObject();/* основной объект для записи результата */
+        JSONArray faculties = new JSONArray();
+        for (int i = 0; i < universityList.size(); i++)
         {
-            List<IStudent> stud = university.get(i).getStudents();
-            JSONArray student = new JSONArray();
-            for (int k = 0; k < stud.size(); k++)
+            /* список факультетов университета */
+            List<IFaculty> fac = universityList.get(i).getFaculties();
+
+            for (int k = 0; k < fac.size(); k++)
             {
-                List<String> facultyList = stud.get(k).getFaculties();
-                JSONArray faculties = new JSONArray();
-                for (int m = 0; m < facultyList.size(); m++)
+                JSONArray faculty = new JSONArray();
+
+                List<IStudent> studentsList = fac.get(k).getStudents();
+                JSONArray students = new JSONArray();
+                for (int m = 0; m < studentsList.size(); m++)
                 {
-                    JSONObject faculty = new JSONObject();
-                    faculty.put("name", facultyList.get(m));
-                    faculty.put("university", university.get(i).getName());
-                    faculties.add(faculty);
+                    JSONObject student = new JSONObject();
+                    student.put("name", studentsList.get(m).getName());
+                    students.add(student);
                 }
-                JSONObject objFaculties = new JSONObject();
-                objFaculties.put("faculties", faculties);
-                student.add(objFaculties);
+                /* объединение студентов под надписью students */
+                JSONObject studentTitle = new JSONObject();
+                studentTitle.put("students", students);
+
+                JSONObject nameFac = new JSONObject();
+                nameFac.put("name", fac.get(k).getName());
+
+                JSONObject nameUni = new JSONObject();
+                nameUni.put("university", universityList.get(i).getName());
+
+                faculty.add(nameFac);/* название факультета */
+                faculty.add(nameUni);/* название университета */
+                faculty.add(studentTitle);/* студенты факультета */
+
+                /* объединение всей информации о факультете под надписью faculty */
+                JSONObject facultyTitle = new JSONObject();
+                facultyTitle.put("faculty", faculty);
+                faculties.add(facultyTitle);
+
             }
-            JSONObject objStud = new JSONObject();
-            objStud.put("name", stud.get(i).getName());
-            objStud.put("student", student);
-            students.put("students", objStud);
+            result.put("faculties", faculties);
+
         }
         try{
-            FileWriter file = new FileWriter("data,json");
-            file.write(students.toJSONString());
+            FileWriter file = new FileWriter("data.json");
+            file.write(result.toJSONString());
             file.flush();
             file.close();
-            System.out.print(students.toJSONString());
+            System.out.print(result.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
+
 
     /*private static void ToReadStudentsFromJSON(IUniversity university, String path) throws IOException, ParseException {
         FileReader reader = new FileReader(new File(path));

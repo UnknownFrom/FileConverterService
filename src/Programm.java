@@ -30,6 +30,19 @@ public class Programm {
         String pathDocument = new Scanner(System.in).nextLine();
         extentsion.getReader().read(universityList, pathDocument); /* заносим данные */
 
+        System.out.println("В какой формат записать файлы?\n1) JSON\n2) XML");
+        choice = new Scanner(System.in).nextInt();
+        switch (choice) {
+            case 1:
+                extentsion.setWriter(new JSON());
+                break;
+            case 2:
+                extentsion.setWriter(new XML());
+                break;
+        }
+        System.out.println("Введите путь к файлу:");
+        pathDocument = new Scanner(System.in).nextLine();
+        extentsion.getWriter().write(universityList, pathDocument); /* заносим данные */
 
     }
 }

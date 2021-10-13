@@ -26,6 +26,16 @@ public class University implements IUniversity {
     }
 
     @Override
+    public IStudent getStudent(int index) {
+        return students.get(index);
+    }
+
+    @Override
+    public List<IFaculty> getFaculties() {
+        return faculties;
+    }
+
+    @Override
     public String getName() {
         return name;
     }

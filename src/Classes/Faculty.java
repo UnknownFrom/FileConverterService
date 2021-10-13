@@ -21,6 +21,11 @@ public class Faculty implements IFaculty {
         return name;
     }
 
+    @Override
+    public List<IStudent> getStudents() {
+        return students;
+    }
+
 
     @Override
     public void AddStudent(IStudent stud) {
