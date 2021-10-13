@@ -34,9 +34,4 @@ public class Faculty implements IFaculty {
         }
     }
 
-    @Override
-    public void RemoveStudent(IStudent stud) {
-        students.remove(stud);
-    }
-
 }
