@@ -6,6 +6,7 @@ import org.json.simple.parser.ParseException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Programm {
-    public static void main(String[] args) throws ParserConfigurationException, IOException, ParseException, SAXException {
+    public static void main(String[] args) throws ParserConfigurationException, IOException, ParseException, SAXException, TransformerException {
         List<IUniversity> universityList = new ArrayList<>();
         ManageExtentsion extentsion = new ManageExtentsion();
         System.out.println("Из какого формата считать файлы?\n1) JSON\n2) XML");

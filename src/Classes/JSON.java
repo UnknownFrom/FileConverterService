@@ -34,6 +34,7 @@ public class JSON implements IReader, IWriter {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
         JSONArray faculties = (JSONArray) jsonObject.get("faculties");
         Iterator i = faculties.iterator();
+        int indFac = -1;
         while (i.hasNext()) {
             JSONObject faculty = (JSONObject) i.next();
             String nameUniversity = (String)faculty.get("university");
@@ -54,6 +55,7 @@ public class JSON implements IReader, IWriter {
                 indUn = university.size()-1;
             }
             university.get(indUn).AddFaculty(new Faculty(nameFaculty));
+            indFac++;
 
             JSONArray students = (JSONArray) faculty.get("students");
             Iterator k = students.iterator();
@@ -61,7 +63,10 @@ public class JSON implements IReader, IWriter {
             {
                 JSONObject student = (JSONObject) k.next();
                 String nameStudent = (String)student.get("name");
+                /* общий список студентов в университете */
                 university.get(indUn).AddStudent(new Student(nameStudent));
+                /* добавляем студента на факультет */
+                university.get(indUn).getFaculty(indFac).AddStudent(new Student(nameStudent));
             }
         }
     }
