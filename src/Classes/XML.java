@@ -14,7 +14,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 public class XML implements IReader, IWriter {
@@ -49,8 +48,7 @@ public class XML implements IReader, IWriter {
             universityElement.setAttributeNode(nameUniversity);
 
             List<IFaculty> facultiesList = universityList.get(i).getFaculties();
-            for (int k = 0; k < facultiesList.size(); k++)
-            {
+            for (int k = 0; k < facultiesList.size(); k++) {
                 /* создание отдельных факультетов */
                 Element facultyElement = document.createElement("faculty");
                 universityElement.appendChild(facultyElement);
@@ -61,8 +59,7 @@ public class XML implements IReader, IWriter {
                 facultyElement.setAttributeNode(nameFaculty);
 
                 List<IStudent> studentsList = facultiesList.get(k).getStudents();
-                for (int m = 0; m < studentsList.size(); m++)
-                {
+                for (int m = 0; m < studentsList.size(); m++) {
                     /* создание отдельных факультетов */
                     Element studentElement = document.createElement("student");
                     facultyElement.appendChild(studentElement);
@@ -74,17 +71,12 @@ public class XML implements IReader, IWriter {
                 }
             }
         }
-
         /* запись в XML документ */
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(new File("data.xml"));
         transformer.transform(source, result);
-
-        // вывод в консоль
-        //StreamResult consoleResult = new StreamResult(System.out);
-        //transformer.transform(source, consoleResult);
     }
 
     private void ToReadUniversitiesFromXML(List<IUniversity> universityList, String path) throws ParserConfigurationException, IOException, SAXException {
@@ -132,6 +124,4 @@ public class XML implements IReader, IWriter {
             }
         }
     }
-
-
 }

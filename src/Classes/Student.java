@@ -1,13 +1,8 @@
 package Classes;
 
-import Interface.IFaculty;
 import Interface.IStudent;
 
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Student implements IStudent {
@@ -35,5 +30,4 @@ public class Student implements IStudent {
     public List<String> getFaculties() {
         return faculties;
     }
-
 }
