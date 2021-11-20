@@ -75,7 +75,7 @@ public class XML implements IReader, IWriter {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(document);
-        StreamResult result = new StreamResult(new File("data.xml"));
+        StreamResult result = new StreamResult(new File(pathDocument));
         transformer.transform(source, result);
     }
 

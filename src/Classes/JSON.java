@@ -93,11 +93,11 @@ public class JSON implements IReader, IWriter {
 
         }
         try {
-            FileWriter file = new FileWriter("data.json");
+            FileWriter file = new FileWriter(pathDocument);
             file.write(result.toJSONString());
             file.flush();
             file.close();
-            System.out.print(result.toJSONString());
+            //System.out.print(result.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         }

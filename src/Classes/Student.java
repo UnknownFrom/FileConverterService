@@ -25,9 +25,4 @@ public class Student implements IStudent {
     public String getName() {
         return name;
     }
-
-    @Override
-    public List<String> getFaculties() {
-        return faculties;
-    }
 }

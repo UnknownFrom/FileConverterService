@@ -14,6 +14,7 @@ import java.util.List;
 
 public class Programm {
     public static void main(String[] args) throws ParserConfigurationException, IOException, ParseException, SAXException, TransformerException {
+        /* "C:\Program Files\Java\jdk-16.0.2\bin\java.exe" -jar FileConverterService.iml.jar data.xml dataResult.json */
         List<IUniversity> universityList = new ArrayList<>();
         ManageExtentsion extentsion = new ManageExtentsion();
         File read = new File(args[0]);
