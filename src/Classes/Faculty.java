@@ -4,7 +4,6 @@ import Interface.IFaculty;
 import Interface.IStudent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Faculty implements IFaculty {
@@ -26,12 +25,10 @@ public class Faculty implements IFaculty {
         return students;
     }
 
-
     @Override
     public void AddStudent(IStudent stud) {
         if (!students.contains(stud)) {
             students.add(stud);
         }
     }
-
 }
