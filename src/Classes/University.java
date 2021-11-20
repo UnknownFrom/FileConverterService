@@ -38,11 +38,6 @@ public class University implements IUniversity {
     }
 
     @Override
-    public List<IStudent> getStudents() {
-        return students;
-    }
-
-    @Override
     public void AddStudent(IStudent student) {
         if (!students.contains(student)) {
             students.add(student);
