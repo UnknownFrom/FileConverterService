@@ -52,9 +52,8 @@ public class Json implements IReader, IWriter {
             indFac++;
 
             JSONArray students = (JSONArray) faculty.get("students");
-            Iterator k = students.iterator();
-            while (k.hasNext()) {
-                JSONObject student = (JSONObject) k.next();
+            for (Object studentObj : students) {
+                JSONObject student = (JSONObject) studentObj;
                 String nameStudent = (String) student.get("name");
                 /* общий список студентов в университете */
                 universities.get(indUn).addStudent(new Student(nameStudent));
@@ -67,23 +66,23 @@ public class Json implements IReader, IWriter {
     private void writeToJson(List<University> universities, String path) {
         JSONObject result = new JSONObject();/* основной объект для записи результата */
         JSONArray faculties = new JSONArray();
-        for (int i = 0; i < universities.size(); i++) {
+        for (University university : universities) {
             /* список факультетов университета */
-            List<Faculty> fac = universities.get(i).getFaculties();
+            List<Faculty> fac = university.getFaculties();
 
-            for (int k = 0; k < fac.size(); k++) {
-                List<Student> studentsList = fac.get(k).getStudents();
+            for (Faculty faculty : fac) {
+                List<Student> studentsList = faculty.getStudents();
                 JSONArray students = new JSONArray();
-                for (int m = 0; m < studentsList.size(); m++) {
+                for (Student value : studentsList) {
                     JSONObject student = new JSONObject();
-                    student.put("name", studentsList.get(m).getName());
+                    student.put("name", value.getName());
                     students.add(student);
                 }
                 /* объединение студентов под надписью students */
                 JSONObject studentTitle = new JSONObject();
                 studentTitle.put("students", students);
-                studentTitle.put("name", fac.get(k).getName());
-                studentTitle.put("university", universities.get(i).getName());
+                studentTitle.put("name", faculty.getName());
+                studentTitle.put("university", university.getName());
 
                 /* занесение факультета в массив */
                 faculties.add(studentTitle);
