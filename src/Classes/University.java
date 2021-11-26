@@ -1,16 +1,12 @@
 package Classes;
 
-import Interface.IFaculty;
-import Interface.IStudent;
-import Interface.IUniversity;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class University implements IUniversity {
-    private List<IFaculty> faculties;
+public class University {
+    private List<Faculty> faculties;
     private String name;
-    private List<IStudent> students;
+    private List<Student> students;
 
     public University(String name) {
         faculties = new ArrayList<>();
@@ -18,34 +14,29 @@ public class University implements IUniversity {
         students = new ArrayList<>();
     }
 
-    public IFaculty getFaculty(int index) {
+    public Faculty getFaculty(int index) {
         return faculties.get(index);
     }
 
-    @Override
-    public IStudent getStudent(int index) {
+    public Student getStudent(int index) {
         return students.get(index);
     }
 
-    @Override
-    public List<IFaculty> getFaculties() {
+    public List<Faculty> getFaculties() {
         return faculties;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
-    public void AddStudent(IStudent student) {
+    public void addStudent(Student student) {
         if (!students.contains(student)) {
             students.add(student);
         }
     }
 
-    @Override
-    public void AddFaculty(IFaculty faculty) {
+    public void addFaculty(Faculty faculty) {
         if (!faculties.contains(faculty)) {
             faculties.add(faculty);
         }

@@ -1,11 +1,9 @@
 package Classes;
 
-import Interface.IStudent;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student implements IStudent {
+public class Student {
     private String name;
     private List<String> faculties; /*на какие факультеты поступил*/
 
@@ -14,14 +12,12 @@ public class Student implements IStudent {
         faculties = new ArrayList<>();
     }
 
-    @Override
-    public void AddFaculties(String fac) {
+    public void addFaculties(String fac) {
         if (!faculties.contains(fac)) {
             faculties.add(fac);
         }
     }
 
-    @Override
     public String getName() {
         return name;
     }

@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <universities>
     <university name="ВятГУ">
         <faculty name="Факультет_компьютерных_и_физико-математических_наук">
             <student name="Ветлугаев_Павел_Владимирович"/>
-            <student name="Ветлугаев_Павел_Владимирович2"/>
-            <student name="Ветлугаев_Павел_Владимирович3"/>
         </faculty>
         <faculty name="Электротехнический_факультет">
             <student name="Крупин_Максим_Сергеевич"/>
@@ -16,7 +14,7 @@
             <student name="Кинаш_Роман_Сергеевич"/>
         </faculty>
         <faculty name="Факультет_физической_культуры_и_спорта">
-            <student name="Надежда_Владимировна_Сергеевна"/>
+            <student name="Шалагинова_Надежда_Владимировна"/>
         </faculty>
     </university>
 </universities>

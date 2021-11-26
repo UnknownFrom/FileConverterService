@@ -3,7 +3,7 @@ package Classes;
 import Interface.IReader;
 import Interface.IWriter;
 
-public class ManageExtentsion {
+public class ManageExtension {
     private IReader reader;
     private IWriter writer;
 

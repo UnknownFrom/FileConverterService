@@ -16,19 +16,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class XML implements IReader, IWriter {
+public class Xml implements IReader, IWriter {
 
     @Override
-    public void read(List<IUniversity> universityList, String pathDocument) throws ParserConfigurationException, IOException, SAXException {
-        ToReadUniversitiesFromXML(universityList, pathDocument);
+    public void read(List<University> universities, String path) throws ParserConfigurationException, IOException, SAXException {
+        readFromXml(universities, path);
     }
 
     @Override
-    public void write(List<IUniversity> universityList, String pathDocument) throws ParserConfigurationException, TransformerException {
-        ToWriteUniversitiesToXML(universityList, pathDocument);
+    public void write(List<University> universities, String path) throws ParserConfigurationException, TransformerException {
+        writeToXml(universities, path);
     }
 
-    private void ToWriteUniversitiesToXML(List<IUniversity> universityList, String pathDocument) throws ParserConfigurationException, TransformerException {
+    private void writeToXml(List<University> universities, String path) throws ParserConfigurationException, TransformerException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document document = dBuilder.newDocument();
@@ -37,17 +37,17 @@ public class XML implements IReader, IWriter {
         Element rootElement = document.createElement("universities");
         document.appendChild(rootElement);
 
-        for (int i = 0; i < universityList.size(); i++) {
+        for (int i = 0; i < universities.size(); i++) {
             /* создание отдельных университетов */
             Element universityElement = document.createElement("university");
             rootElement.appendChild(universityElement);
 
             /* создание атрибутов */
             Attr nameUniversity = document.createAttribute("name");
-            nameUniversity.setValue(universityList.get(i).getName());
+            nameUniversity.setValue(universities.get(i).getName());
             universityElement.setAttributeNode(nameUniversity);
 
-            List<IFaculty> facultiesList = universityList.get(i).getFaculties();
+            List<Faculty> facultiesList = universities.get(i).getFaculties();
             for (int k = 0; k < facultiesList.size(); k++) {
                 /* создание отдельных факультетов */
                 Element facultyElement = document.createElement("faculty");
@@ -58,7 +58,7 @@ public class XML implements IReader, IWriter {
                 nameFaculty.setValue(facultiesList.get(k).getName());
                 facultyElement.setAttributeNode(nameFaculty);
 
-                List<IStudent> studentsList = facultiesList.get(k).getStudents();
+                List<Student> studentsList = facultiesList.get(k).getStudents();
                 for (int m = 0; m < studentsList.size(); m++) {
                     /* создание отдельных факультетов */
                     Element studentElement = document.createElement("student");
@@ -75,11 +75,11 @@ public class XML implements IReader, IWriter {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(document);
-        StreamResult result = new StreamResult(new File(pathDocument));
+        StreamResult result = new StreamResult(new File(path));
         transformer.transform(source, result);
     }
 
-    private void ToReadUniversitiesFromXML(List<IUniversity> universityList, String path) throws ParserConfigurationException, IOException, SAXException {
+    private void readFromXml(List<University> universities, String path) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new File(path));
@@ -92,7 +92,7 @@ public class XML implements IReader, IWriter {
             Node university = universitiesElements.item(i);
             NamedNodeMap attributesUni = university.getAttributes();
             String nameUni = attributesUni.getNamedItem("name").getNodeValue();
-            universityList.add(new University(nameUni));
+            universities.add(new University(nameUni));
 
             NodeList facultiesElements = university.getChildNodes();
             int countStud = -1;
@@ -104,7 +104,7 @@ public class XML implements IReader, IWriter {
 
                     NamedNodeMap attributesFac = faculty.getAttributes();
                     String nameFac = attributesFac.getNamedItem("name").getNodeValue();
-                    universityList.get(i).AddFaculty(new Faculty(nameFac));
+                    universities.get(i).addFaculty(new Faculty(nameFac));
                     countFac++;
 
                     NodeList studentsElements = faculty.getChildNodes();
@@ -114,10 +114,10 @@ public class XML implements IReader, IWriter {
                         if (student.getNodeType() != Node.TEXT_NODE) {
                             NamedNodeMap attributesStud = student.getAttributes();
                             String nameStud = attributesStud.getNamedItem("name").getNodeValue();
-                            universityList.get(i).getFaculty(countFac).AddStudent(new Student(nameStud));
-                            universityList.get(i).AddStudent(new Student(nameStud));
+                            universities.get(i).getFaculty(countFac).addStudent(new Student(nameStud));
+                            universities.get(i).addStudent(new Student(nameStud));
                             countStud++;
-                            universityList.get(i).getStudent(countStud).AddFaculties(nameFac);
+                            universities.get(i).getStudent(countStud).addFaculties(nameFac);
                         }
                     }
                 }
