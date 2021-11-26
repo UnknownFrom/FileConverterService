@@ -37,36 +37,36 @@ public class Xml implements IReader, IWriter {
         Element rootElement = document.createElement("universities");
         document.appendChild(rootElement);
 
-        for (int i = 0; i < universities.size(); i++) {
+        for (University university : universities) {
             /* создание отдельных университетов */
             Element universityElement = document.createElement("university");
             rootElement.appendChild(universityElement);
 
             /* создание атрибутов */
             Attr nameUniversity = document.createAttribute("name");
-            nameUniversity.setValue(universities.get(i).getName());
+            nameUniversity.setValue(university.getName());
             universityElement.setAttributeNode(nameUniversity);
 
-            List<Faculty> facultiesList = universities.get(i).getFaculties();
-            for (int k = 0; k < facultiesList.size(); k++) {
+            List<Faculty> facultiesList = university.getFaculties();
+            for (Faculty faculty : facultiesList) {
                 /* создание отдельных факультетов */
                 Element facultyElement = document.createElement("faculty");
                 universityElement.appendChild(facultyElement);
 
                 /* создание атрибутов */
                 Attr nameFaculty = document.createAttribute("name");
-                nameFaculty.setValue(facultiesList.get(k).getName());
+                nameFaculty.setValue(faculty.getName());
                 facultyElement.setAttributeNode(nameFaculty);
 
-                List<Student> studentsList = facultiesList.get(k).getStudents();
-                for (int m = 0; m < studentsList.size(); m++) {
+                List<Student> studentsList = faculty.getStudents();
+                for (Student student : studentsList) {
                     /* создание отдельных факультетов */
                     Element studentElement = document.createElement("student");
                     facultyElement.appendChild(studentElement);
 
                     /* создание атрибутов */
                     Attr nameStudent = document.createAttribute("name");
-                    nameStudent.setValue(studentsList.get(m).getName());
+                    nameStudent.setValue(student.getName());
                     studentElement.setAttributeNode(nameStudent);
                 }
             }
