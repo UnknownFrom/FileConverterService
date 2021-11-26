@@ -3,18 +3,13 @@ import Classes.ManageExtension;
 import Classes.University;
 import Classes.Xml;
 import org.apache.commons.io.FilenameUtils;
-import org.json.simple.parser.ParseException;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Program {
-    public static void main(String[] args) throws ParserConfigurationException, IOException, ParseException, SAXException, TransformerException {
+    public static void main(String[] args){
         /* "C:\Program Files\Java\jdk-16.0.2\bin\java.exe" -jar FileConverterService.iml.jar data.xml dataResult.json */
         try {
             List<University> universities = new ArrayList<>();
